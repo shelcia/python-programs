@@ -17,6 +17,22 @@
 # Time Complexity -> O(nlogn) Space complexity -> O(n)
 
 def mergeInterval(arr):
+
+    # Python Lambda Functions
+
+    # In Python, an anonymous function means that a function is without a name.
+    # As we already know that the def keyword is used to define a normal function in Python.
+    # Similarly, the lambda keyword is used to define an anonymous function in Python.
+    # It has the following syntax:
+
+    # Syntax: lambda arguments: expression
+
+    # Using Lambda: Lambda definition does not include a “return” statement,
+    # it always contains an expression that is returned.
+    # We can also put a lambda definition anywhere a function is expected,
+    # and we don’t have to assign it to a variable at all.
+    # This is the simplicity of lambda functions.
+
     arr.sort(key=lambda x: x[0])
     # print(arr)
 
@@ -30,7 +46,7 @@ def mergeInterval(arr):
             mergedInterval.append([mergedInterval[k][0], arr[i][1]])
             mergedInterval.pop(k)
         else:
-            # SETS WHICH ARE SUBSETS OF PREVIOUS SET
+            # SETS WHICH ARE NOT SUBSETS OF PREVIOUS SET
             if(not (mergedInterval[k][1] >= arr[i][1] and mergedInterval[k][0] <= arr[i][0])):
                 k += 1
                 mergedInterval.append(arr[i])
