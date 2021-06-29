@@ -47,38 +47,20 @@ class binaryTree:
         else:
             return self.preorderTravesal(self.root)
 
-    # def _heighofBT(self, node):
-    #     if node is None:
-    #         return 0
-    #     else:
-    #         lDepth = self._heighofBT(node.left)
-    #         rDepth = self._heighofBT(node.right)
-
-    #         if(lDepth > rDepth):
-    #             return lDepth + 1
-    #         else:
-    #             return rDepth + 1
-
-    # def heighofBT(self):
-    #     if(self.root is None):
-    #         return "empty BT"
-    #     else:
-    #         self._heighofBT(self.root)
     def _maxDepth(self, node):
 
         if node is None:
             return 0
 
         else:
+            print('node value', node.value)
             lDepth = self._maxDepth(node.left)
             rDepth = self._maxDepth(node.right)
 
-            if (lDepth > rDepth):
-                return lDepth+1
-            else:
-                return rDepth+1
+        return max(lDepth, rDepth) + 1
 
     def maxDepth(self):
+        print('maxDepth is called')
         if(self.root is None):
             return "empty BT"
         else:
@@ -89,11 +71,11 @@ if __name__ == '__main__':
 
     nodeInstance = binaryTree()
 
-    nodeInstance.insertNode('1')
     nodeInstance.insertNode('5')
-    nodeInstance.insertNode('6')
-    nodeInstance.insertNode('11')
     nodeInstance.insertNode('7')
+    nodeInstance.insertNode('2')
+    nodeInstance.insertNode('3')
+    nodeInstance.insertNode('8')
 
     print(nodeInstance.printBT())
     print(nodeInstance.maxDepth())

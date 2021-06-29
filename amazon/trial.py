@@ -25,10 +25,8 @@ def maxDepth(node):
         rDepth = maxDepth(node.right)
 
         # Use the larger one
-        if (lDepth > rDepth):
-            return lDepth+1
-        else:
-            return rDepth+1
+
+        return max(lDepth, rDepth) + 1
 
 
 # Driver program to test above function

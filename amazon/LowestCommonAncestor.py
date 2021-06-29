@@ -61,52 +61,51 @@ class binaryTree:
 
         return self.inorderTraversal(self.root)
 
-    def _findPath(self, node, key, path):
+    def findPath(self, root, path, k):
 
-        if node is None:
+        # Baes Case
+        if root is None:
             return False
 
-        path.append(node.value)
+        # Store this node is path vector. The node will be
+        # removed if not in path from root to k
+        path.append(root.value)
 
-        if node.value == key:
+        # See if the k is same as root's key
+        if root.value == k:
             return True
 
-        if ((node.left != None and self._findPath(node.left, key, path)) or
-                (node.right != None and self._findPath(node.right, key, path))):
+        # Check if k is found in left or right sub-tree
+        if ((root.left != None and self.findPath(root.left, path, k)) or
+                (root.right != None and self.findPath(root.right, path, k))):
             return True
 
-        if(len(path)):
-            path.pop()
+        # If not present in subtree rooted with root, remove
+        # root from path and return False
+
+        path.pop()
         return False
 
-    def findPath(self, key, path):
-        if self.root is None:
-            return False
+    # Returns LCA if node n1 , n2 are present in the given
+    # binary tre otherwise return -1
+    def findLCA(self, n1, n2):
 
-        path.append(self.root.value)
-
-        print(self.root.value, key)
-        if(self.root.value == key):
-            return True
-
-        else:
-            self._findPath(self.root, key, path)
-
-    def LCA(self, node1, node2):
-
+        # To store paths to n1 and n2 fromthe root
         path1 = []
         path2 = []
 
-        if(self.findPath(node1, path1) and self.findPath(node2, path2)):
+        # Find paths from root to n1 and root to n2.
+        # If either n1 or n2 is not present , return -1
+        if (not self.findPath(self.root, path1, n1) or not self.findPath(self.root, path2, n2)):
             return -1
 
+        # Compare the paths to get the first different value
         i = 0
-        while (i < len(path1) and i < len(path2)):
-            if (path1[i] != path2[i]):
+        while(i < len(path1) and i < len(path2)):
+            if path1[i] != path2[i]:
                 break
             i += 1
-
-        return path1
+        return path1[i-1]
 
 
 if __name__ == "__main__":
@@ -121,5 +120,5 @@ if __name__ == "__main__":
     nodeInstance.insertNode('2')
     nodeInstance.insertNode('1')
 
-    print(nodeInstance.printBinaryTree())
-    print(nodeInstance.LCA(1, 6))
+    print('preorder', nodeInstance.printBinaryTree())
+    print(nodeInstance.findLCA(1, 1))
