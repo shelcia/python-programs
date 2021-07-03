@@ -1,42 +1,41 @@
-# Python3 program to find the maximum depth of tree
+# Python3 program to
+# Print all combinations
+# of balanced parentheses
 
-# A binary tree node
-class Node:
-
-    # Constructor to create a new node
-    def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
-
-# Compute the "maxDepth" of a tree -- the number of nodes
-# along the longest path from the root node down to the
-# farthest leaf node
+# Wrapper over _printParenthesis()
+def printParenthesis(str, n):
+    if(n > 0):
+        _printParenthesis(str, 0,
+                          n, 0, 0)
+    return
 
 
-def maxDepth(node):
-    if node is None:
-        return 0
+def _printParenthesis(str, pos, n,
+                      open, close):
 
+  # print('str', str)
+
+    if(close == n):
+        for i in str:
+            print('paran', i, end="")
+        print()
+        return
     else:
-
-        # Compute the depth of each subtree
-        lDepth = maxDepth(node.left)
-        rDepth = maxDepth(node.right)
-
-        # Use the larger one
-
-        return max(lDepth, rDepth) + 1
-
-
-# Driver program to test above function
-root = Node(1)
-root.left = Node(2)
-root.right = Node(3)
-root.left.left = Node(4)
-root.left.right = Node(5)
+        # print('str', str)
+        if(open > close):
+            str[pos] = '}'
+            _printParenthesis(str, pos + 1, n,
+                              open, close + 1)
+        if(open < n):
+            str[pos] = '{'
+            _printParenthesis(str, pos + 1, n,
+                              open + 1, close)
 
 
-print("Height of tree is %d" % (maxDepth(root)))
+# Driver Code
+n = 3
+str = [""] * 2 * n
+printParenthesis(str, n)
 
-# This code is contributed by Nikhil Kumar Singh(nickzuck_007)
+# This Code is contributed
+# by mits.
