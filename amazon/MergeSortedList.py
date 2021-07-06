@@ -18,6 +18,9 @@ class Node:
         self.value = value
         self.nextNode = nexNode
 
+# Time Complexity: O(N+M) where N and M are the sizes of linked lists.
+# Space Complexity: O(N+M), creating dummy nodes
+
 
 class LinkedList:
 
@@ -80,7 +83,7 @@ def mergeLists(headA, headB):
         tail.nextNode = headA
         tail = tail.nextNode
     if headB:
-        tail.nextNode = headA
+        tail.nextNode = headB
         tail = tail.nextNode
 
     return tempNode.nextNode
