@@ -24,8 +24,33 @@ class binaryTreeNode:
 
 class binaryTree:
 
+    # To store paths to n1 and n2 fromthe root
+
     def __init__(self, root=None):
         self.root = root
+        self.path1 = []
+        self.path2 = []
+
+    def _findLCARec(self, root, node1, node2):
+
+        # Current Pointer
+        cur = root
+
+        while cur:
+            print('current value', cur.value, node1, node2)
+
+            if int(cur.value) < node1 and int(cur.value) < node2:
+                cur = cur.right
+            elif int(cur.value) > node1 and int(cur.value) > node2:
+                cur = cur.left
+            else:
+                return cur.value
+
+    def findLCARec(self, node1, node2):
+        if self.root is None:
+            return 0
+        print(self.root.value, node1, node2)
+        return self._findLCARec(self.root, node1, node2)
 
     def _insertNode(self, node, value):
 
@@ -61,52 +86,6 @@ class binaryTree:
 
         return self.inorderTraversal(self.root)
 
-    def findPath(self, root, path, k):
-
-        # Baes Case
-        if root is None:
-            return False
-
-        # Store this node is path vector. The node will be
-        # removed if not in path from root to k
-        path.append(root.value)
-
-        # See if the k is same as root's key
-        if root.value == k:
-            return True
-
-        # Check if k is found in left or right sub-tree
-        if ((root.left != None and self.findPath(root.left, path, k)) or
-                (root.right != None and self.findPath(root.right, path, k))):
-            return True
-
-        # If not present in subtree rooted with root, remove
-        # root from path and return False
-
-        path.pop()
-        return False
-
-    # Returns LCA if node n1 , n2 are present in the given
-    # binary tre otherwise return -1
-    def findLCA(self, n1, n2):
-
-        # To store paths to n1 and n2 fromthe root
-        path1 = []
-        path2 = []
-
-        # Find paths from root to n1 and root to n2.
-        # If either n1 or n2 is not present , return -1
-        if (not self.findPath(self.root, path1, n1) or not self.findPath(self.root, path2, n2)):
-            return -1
-
-        # Compare the paths to get the first different value
-        i = 0
-        while(i < len(path1) and i < len(path2)):
-            if path1[i] != path2[i]:
-                break
-            i += 1
-        return path1[i-1]
-
 
 if __name__ == "__main__":
 
@@ -116,9 +95,21 @@ if __name__ == "__main__":
     nodeInstance.insertNode('4')
     nodeInstance.insertNode('6')
     nodeInstance.insertNode('3')
-    nodeInstance.insertNode('7')
+    nodeInstance.insertNode('9')
     nodeInstance.insertNode('2')
     nodeInstance.insertNode('1')
+    nodeInstance.insertNode('7')
+    nodeInstance.insertNode('11')
 
-    print('preorder', nodeInstance.printBinaryTree())
-    print(nodeInstance.findLCA(1, 1))
+    print('inorder', nodeInstance.printBinaryTree())
+    print('findrec', nodeInstance.findLCARec(7, 11))
+
+#             5
+#           /  \
+#         4     6
+#        /       \
+#       3         9
+#      /         / \
+#     2         7   11
+#    /
+#   1
