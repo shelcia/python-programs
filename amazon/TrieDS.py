@@ -1,95 +1,98 @@
-# Python program for insert and search
-# operation in a Trie
+# Implement Trie (Prefix Tree)
+
+# A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store
+# and retrieve keys in a dataset of strings. There are various applications of this data structure,
+# such as autocomplete and spellchecker.
+
+# Implement the Trie class:
+
+# Trie() Initializes the trie object.
+# void insert(String word) Inserts the string word into the trie.
+# boolean search(String word) Returns true if the string word is in the trie
+# (i.e., was inserted before), and false otherwise.
+# boolean startsWith(String prefix) Returns true if there is a previously inserted string word
+# that has the prefix prefix, and false otherwise.
+
+
+# Example 1:
+
+# Input
+# ["Trie", "insert", "search", "search", "startsWith", "insert", "search"]
+# [[], ["apple"], ["apple"], ["app"], ["app"], ["app"], ["app"]]
+# Output
+# [null, null, true, false, true, null, true]
+
+# Explanation
+# Trie trie = new Trie();
+# trie.insert("apple");
+# trie.search("apple");   // return True
+# trie.search("app");     // return False
+# trie.startsWith("app"); // return True
+# trie.insert("app");
+# trie.search("app");     // return True
+
+
+# Constraints:
+
+# 1 <= word.length, prefix.length <= 2000
+# word and prefix consist only of lowercase English letters.
+# At most 3 * 104 calls in total will be made to insert, search, and startsWith.
+
 
 class TrieNode:
 
-    # Trie node class
     def __init__(self):
-        self.children = [None]*26
-
-        # isEndOfWord is True if node represent the end of the word
-        self.isEndOfWord = False
+        self.children = {}
+        self.endOfWord = False
 
 
 class Trie:
 
-    # Trie data structure class
     def __init__(self):
-        self.root = self.getNode()
+        self.root = TrieNode()
 
-    def getNode(self):
+    def insertTrie(self, word):
 
-        # Returns new trie node (initialized to NULLs)
-        return TrieNode()
+        currentNode = self.root
 
-    def _charToIndex(self, ch):
+        for c in word:
+            if c not in currentNode.children:
+                currentNode.children[c] = TrieNode()
+            currentNode = currentNode.children[c]
 
-        # private helper function
-        # Converts key current character into index
-        # use only 'a' through 'z' and lower case
+        currentNode.endOfWord = True
 
-        return ord(ch)-ord('a')
+    def searchTrie(self, key):
 
-    def insert(self, key):
+        currentNode = self.root
 
-        # If not present, inserts key into trie
-        # If the key is prefix of trie node,
-        # just marks leaf node
-        pCrawl = self.root
-        length = len(key)
-        for level in range(length):
-            index = self._charToIndex(key[level])
-            print('index', index)
-
-            # if current character is not present
-            if not pCrawl.children[index]:
-                pCrawl.children[index] = self.getNode()
-                print('pCrawl.children[index]',
-                      pCrawl.children[index].children)
-            pCrawl = pCrawl.children[index]
-
-        # mark last node as leaf
-        pCrawl.isEndOfWord = True
-
-    def search(self, key):
-
-        # Search key in the trie
-        # Returns true if key presents
-        # in trie, else false
-        pCrawl = self.root
-        length = len(key)
-        for level in range(length):
-            index = self._charToIndex(key[level])
-            if not pCrawl.children[index]:
+        for c in key:
+            if c not in currentNode.children:
                 return False
-            pCrawl = pCrawl.children[index]
+            currentNode = currentNode.children[c]
 
-        return pCrawl.isEndOfWord
+        # So we know that for sure this is not just a part of big string
+        return currentNode.endOfWord
 
-# driver function
+    def startWithTrie(self, key):
 
+        currentNode = self.root
 
-def main():
+        for c in key:
+            if c not in currentNode.children:
+                return False
+            currentNode = currentNode.children[c]
 
-    # Input keys (use only 'a' through 'z' and lower case)
-    keys = ["the", "a", "there", "anaswe", "any",
-            "by", "their"]
-    output = ["Not present in trie",
-              "Present in trie"]
-
-    # Trie object
-    t = Trie()
-
-    # Construct trie
-    for key in keys:
-        t.insert(key)
-
-    # Search for different keys
-    print("{} ---- {}".format("the", output[t.search("the")]))
-    print("{} ---- {}".format("these", output[t.search("these")]))
-    print("{} ---- {}".format("their", output[t.search("their")]))
-    print("{} ---- {}".format("thaw", output[t.search("thaw")]))
+        return True
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+
+    instance = Trie()
+
+    instance.insertTrie("apple")
+    print(instance.searchTrie("apple"))
+    print(instance.searchTrie("app"))
+    print(instance.startWithTrie("app"))
+    instance.insertTrie("app")
+    print(instance.searchTrie("app"))
