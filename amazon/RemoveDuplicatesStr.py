@@ -7,10 +7,12 @@
 
 def removeDuplicates(string):
 
-    arr = list(string)
-    arr = set(arr)
+    # arr = list(string)
+    # arr = set(arr)
 
-    print(''.join(arr))
+    # print(''.join(arr))
+
+    print(''.join(set(list(string))))
 
 
 removeDuplicates('eeeefggkkorss')
