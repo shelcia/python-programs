@@ -26,6 +26,17 @@
 #                    6     7
 # Output :  17
 
+#
+# [50,null,54,98,6,null,null,null,34]
+
+# Input :          50
+#                /   \
+#              2      54
+#            /  \      \
+#           4    5      8
+#                     /   \
+#                    6     7
+
 class Node:
 
     def __init__(self, key):
