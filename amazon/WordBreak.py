@@ -29,22 +29,20 @@
 
 def wordBreak(wordList, word):
 
-    print('this recursive runs!!')
-
     if word == '':
-        print('i ran')
         return True
     else:
         print('word', word)
         wordLen = len(word)
-        return (any([(word[:i] in wordList) and
-                     wordBreak(wordList, word[i:]) for i in range(1, wordLen+1)]))
+        res = (([(word[:i] in wordList) and
+                 wordBreak(wordList, word[i:]) for i in range(1, wordLen+1)]))
+        return res
 
 
 wordList = ["mobile", "samsung", "sam", "sung",
             "man", "mango", "icecream", "and",
             "go", "i", "like", "ice", "cream"]
 
-word = "ilikesamsung"
+word = "ilikesamsun"
 
 print(wordBreak(wordList, word))
