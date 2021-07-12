@@ -74,6 +74,28 @@ def findLCA(root, n1, n2):
     return path1[i-1]
 
 
+def findLCAII(root, n1, n2):
+
+    # Base Case
+    if root is None:
+        return None
+
+    # if one of them is ancestor
+    if root.key == n1 or root.key == n2:
+        return root
+
+    # look for keys in subtree
+
+    leftTree = findLCAII(root.left, n1, n2)
+    rightTree = findLCAII(root.right, n1, n2)
+
+    # if both tree return non NULL then root is out ancestor
+    if leftTree and rightTree:
+        return root
+
+    return leftTree if leftTree is not None else rightTree
+
+
 if __name__ == "__main__":
 
     root = Node(1)
@@ -88,6 +110,8 @@ if __name__ == "__main__":
     print("LCA(4, 6) = %d" % (findLCA(root, 4, 6)))
     print("LCA(3, 4) = %d" % (findLCA(root, 3, 4)))
     print("LCA(2, 4) = %d" % (findLCA(root, 2, 4)))
+
+    print("LCA(4, 5) = %d" % (findLCAII(root, 4, 5,)))
 
 #             1
 #          /    \
